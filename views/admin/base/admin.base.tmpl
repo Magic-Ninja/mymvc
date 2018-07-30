@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>{% block title %}{% endblock %}MVC Bookstore - Админпанель</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/custom.css" rel="stylesheet">
+      {% endblock %}
+  </head>
+
+  <body>
+        {% block header %}
+         <header>
+
+      <!-- Fixed navbar -->
+            {% block nav %}
+                {{ include('admin/base/admin.base.nav.tmpl') }}
+            {% endblock %}
+
+        </header>
+        {% endblock %}
+    <!-- Begin page content -->
+    <main role="main">
+
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-lg-2 left-sidebar" style="margin-top: 20px">
+
+              {% block adminmenu %}
+                  {{ include('admin/base/admin.base.menu.tmpl') }}
+
+              {% endblock %}
+        </div>
+
+          <div class="col-lg-10">
+                {% block content %}
+
+                {% endblock %}
+          </div>
+        </div>
+      </div>
+
+    </main>
+    {% block footer %}
+    <footer class="footer bg-light" style="text-align: center">
+      <div class="container-fluid">
+        <span class="text-muted">Copyright &copy; MVC Bookstore 2018</span>
+      </div>
+    </footer>
+    {% endblock %}
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/jquery/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+        <script src="/js/feather.min.js"></script>
+        <script>
+            feather.replace()
+        </script>
+
+  </body>
+</html>

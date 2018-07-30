@@ -1,0 +1,40 @@
+{% extends "admin/base/admin.base.tmpl" %}
+     {% block content %}
+
+
+         <div class="d-flex bd-highlight mb-3" style="margin-top: 20px">
+             <div class="mr-auto p-2 bd-highlight"><h1 class="h2">Товары </h1></div>
+             <div class="p-2 bd-highlight"><a class="btn btn-success" href="/admin/product/create" style="margin-top: 5px">Добавить товар</a></div>
+
+         </div>
+         <hr>
+
+         <table class="table table-hover">
+             <thead class="thead-dark">
+             <tr>
+                 <th scope="col" style="text-align: right; max-width: 400px">ID</th>
+                 <th scope="col" style="text-align: left">Название</th>
+                 <th scope="col" style="text-align: center">Автор</th>
+                 <th scope="col" style="text-align: center">Цена</th>
+                 <th scope="col" style="text-align: center">Редактировать</th>
+                 <th scope="col" style="text-align: center">Удалить</th>
+             </tr>
+             </thead>
+             <tbody>
+
+             {% for productList in productList %}
+                 <tr>
+                     <td align="right">{{ productList.id }}</td>
+                     <td align="left">{{ productList.name}}</td>
+                     <td align="center">{{ productList.author}}</td>
+                     <td align="center">{{ productList.price }}</td>
+                     <td align="center"><a href="/admin/product/update/{{ productList.id }}">Редактировать</a> </td>
+                     <td align="center"><a href="/admin/product/delete/{{ productList.id }}">Удалить</a> </td>
+                 </tr>
+             {% endfor %}
+
+
+             </tbody>
+         </table>
+
+     {% endblock %}

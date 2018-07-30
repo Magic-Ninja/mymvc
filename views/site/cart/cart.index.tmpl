@@ -1,0 +1,41 @@
+{% extends "site/base/site.base.tmpl" %}
+     {% block content %}
+         {% if products %}
+            <h2 class="mt-5" style="text-align: left; margin-bottom: 30px">Корзина товаров:</h2>
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="text-align: center; max-width: 400px">Название</th>
+                        <th scope="col" style="text-align: center">Количество</th>
+                        <th scope="col" style="text-align: center">Цена</th>
+                        <th scope="col" style="text-align: center">Сумма</th>
+                        <th scope="col" style="text-align: center">Удалить</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for products in products %}
+                    <tr>
+                        <td align="center" style="max-width: 300px">{{ products.name }}</td>
+                        <td align="center">{{ productsInCart[products.id]}}</td>
+                        <td align="center">{{ products.price }}</td>
+                        <td align="center">{{ productsInCart[products.id]*products.price }}</td>
+                        <td align="center"><a href="/cart/delete/{{ products.id }}">Удалить</a> </td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="3" align="right"><strong>Общая стоимость:</strong></td>
+                        <td align="center"><strong>{{ totalPrice }}</strong></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+             <div style="text-align: center; margin-top: 40px"><a class="btn btn-success" href="/cart/checkout"><h5>Оформить заказ!</h5></a></div>
+
+
+         {% else %}
+             <h2 class="mt-5" style="text-align: left; margin-bottom: 30px">Ваша корзина пуста!</h2>
+         {% endif %}
+     {% endblock %}

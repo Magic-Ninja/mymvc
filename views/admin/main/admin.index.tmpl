@@ -1,0 +1,15 @@
+{% extends "admin/base/admin.base.tmpl" %}
+     {% block content %}
+         <div class="row" style="text-align: center">
+             <div class="col"><br><br>
+                 <form action="" method="post" class="form-signin">
+                 <h1 class="h3 mb-3 font-weight-normal">Вход в админпанель</h1>
+                 <label for="inputEmail" class="sr-only">Е-майл</label>
+                 <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Е-майл" required autofocus>
+                 <label for="inputPassword" class="sr-only">Пароль</label>
+                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
+                 <button class="btn btn-lg btn-success btn-block" type="submit" name="submit">Войти</button>
+                 </form>
+             </div>
+         </div>
+     {% endblock %}

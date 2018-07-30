@@ -1,0 +1,18 @@
+
+              {% for latestProductsAjax in latestProductsAjax %}
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="/catalog/product/{{ latestProductsAjax.id }}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                <div class="card-body">
+                  <h6 class="card-title">
+                    <a href="/catalog/product/{{ latestProductsAjax.id }}" >{{ latestProductsAjax.name }}</a>
+                  </h6>
+                  <p class="card-text">{{ latestProductsAjax.author }}</p>
+                </div>
+                <div class="card-footer">
+                  <h5>Цена: {{ latestProductsAjax.price }} $</h5>
+                </div>
+              </div>
+            </div>
+              {% endfor %}
+

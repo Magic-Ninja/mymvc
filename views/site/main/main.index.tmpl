@@ -1,0 +1,15 @@
+{% extends "site/base/site.base.tmpl" %}
+     {% block content %}
+       <h2 class="mt-5" style="text-align: center">Добро пожаловать в наш магазин!</h2>
+       <p class="lead" style="text-align: center">Для продолжения работы пройдите регистрацию или авторизацию...</p>
+
+       <div class="row" style="text-align: center; margin-top: 50px">
+         <div class="col">
+             <a href="/user/login" class="btn btn-lg btn-success" style="width: 250px">Войти</a>
+         </div>
+         <div class="col">
+             <a href="/user/register" class="btn btn-lg btn-info" style="width: 250px">Зарегистрироваться</a>
+         </div>
+
+       </div>
+     {% endblock %}

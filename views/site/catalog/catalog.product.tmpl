@@ -1,0 +1,57 @@
+
+{% extends "site/base/site.base.tmpl" %}
+
+   {% block content %}
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+
+        <div class="col-lg-3">
+
+          <h2 class="my-4">Категории</h2>
+          <div class="list-group">
+              {% for categories in categories %}
+                <a href="/catalog/category/{{ categories.id }}" class="list-group-item">{{ categories.name }}</a>
+              {% endfor %}
+          </div>
+
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9" style="margin-top: 50px">
+            <div class="row">
+                <div class="col" style="padding-top: 20px">
+                    <img class="img-thumbnail" src="http://placehold.it/300x400" alt="">
+                </div>
+                <div class="col">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ product.name }}</h4>
+                        <p class="card-text">ID: {{ product.id }}</p>
+                        <p class="card-text">Автор: {{ product.author }}</p><br>
+                        <h4>Цена: ${{ product.price }}</h4><br>
+                        <form method="post" action="/cart/add">
+                            <label for="addAmount">Количество</label><br>
+                            <input type="number" name="addAmount" step="1" value="1" style="width: 80px; text-align: center"><br><br>
+                            <input type="hidden" name="productId" value="{{ product.id }}">
+                            <button class="btn btn-success" type="submit" name="submit">Добавить в корзину</button>
+                        </form>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin: 30px 0px 0px 10px">
+                <p class="card-text">{{ product.description }}</p><br>
+            </div>
+          <!-- /.card -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+      </div>
+
+    </div>
+    <!-- /.container -->
+   {% endblock %}
