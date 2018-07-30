@@ -11,20 +11,37 @@ class CatalogController
     public function actionIndex()
     {
         $categories['categories'] = Catalog::getCategoriesList();
-        $latestProducts['latestProducts'] = Catalog::getLatestProducts(10);
+        $latestProducts['latestProducts'] = Catalog::getLatestProducts(3);
 
         $view = new View();
-        $view->render('/catalog/catalog.index.tmpl', $categories, $latestProducts);
+        $view->render('/site/catalog/catalog.index.tmpl', $latestProducts+$categories);
 
         return true;
+    }
+
+    public function actionShowAjax()
+    {
+        if(isset($_POST['num'])) {
+            $num = $_POST['num'];
+            $latestProductsAjax['latestProductsAjax'] = Catalog::loadProductsAjax($num);
+            $view = new View();
+            $view->render('/site/catalog/catalog.load.tmpl', $latestProductsAjax);
+            //echo "<pre>";
+            //print_r($latestProductsAjax);
+            //echo "</pre>";
+            //echo $num;
+            return true;
+        }
+
     }
     
     public function actionCategory($categoryId)
     {
         $categories['categories'] = Catalog::getCategoriesList();
         $categoryProducts['categoryProducts'] = Catalog::getProductsListByCategory($categoryId);
-       
-        require_once(ROOT . '/views/catalog/category.php');
+
+        $view = new View();
+        $view->render('/site/catalog/catalog.category.index.tmpl', $categoryProducts+$categories);
 
         return true;
     }
@@ -34,8 +51,9 @@ class CatalogController
 
         $categories['categories'] = Catalog::getCategoriesList();
         $product['product'] = Catalog::getProductById($productId);
-
-        require_once(ROOT . '/views/product/view.php');
+        Catalog::lastViewedProduct($productId);
+        $view = new View();
+        $view->render('/site/catalog/catalog.product.tmpl', $product+$categories);
 
         return true;
     }

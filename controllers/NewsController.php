@@ -25,7 +25,7 @@ class NewsController
         //print_r($newsList);
         //echo  '</pre>';
         $view = new View();
-        $view->render('/news/news.index.tmpl', $newsList);
+        $view->render('/site/news/news.index.tmpl', $newsList);
         return true;
 
     }
@@ -38,7 +38,7 @@ class NewsController
         //print_r($newsItem);
         //echo  '</pre>';
         $view = new View();
-        $view->render('/news/news.post.tmpl', $newsItem);
+        $view->render('/site/news/news.post.tmpl', $newsItem);
         return true;
 
     }

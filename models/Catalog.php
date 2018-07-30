@@ -13,13 +13,33 @@ class Catalog
     const SHOW_BY_DEFAULT = 10;
 
 
+    public static function getProductsList()
+    {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Получение и возврат результатов
+        $result = $db->query('SELECT id, name, price, author FROM product ORDER BY id ASC');
+        $productsList = array();
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $productsList[$i]['id'] = $row['id'];
+            $productsList[$i]['name'] = $row['name'];
+            $productsList[$i]['price'] = $row['price'];
+            $productsList[$i]['author'] = $row['author'];
+            $i++;
+        }
+        return $productsList;
+    }
+
+
     public static function getLatestProducts($count = self::SHOW_BY_DEFAULT)
     {
         $count = intval($count);
         $db = Db::getConnection();
         $productsList = array();
 
-        $result = $db->query('SELECT id, name, price, image, is_new FROM product '
+        $result = $db->query('SELECT id, name, price, image, author FROM product '
                 . 'WHERE status = "1"'
                 . 'ORDER BY id DESC '
                 . 'LIMIT ' . $count);
@@ -30,11 +50,36 @@ class Catalog
             $productsList[$i]['name'] = $row['name'];
             $productsList[$i]['image'] = $row['image'];
             $productsList[$i]['price'] = $row['price'];
-            $productsList[$i]['is_new'] = $row['is_new'];
+            $productsList[$i]['author'] = $row['author'];
             $i++;
         }
 
         return $productsList;
+    }
+
+    public static function loadProductsAjax($num)
+    {
+        $num = intval($num);
+        $step = 3;
+        $db = Db::getConnection();
+        $productsListAjax = array();
+
+        $result = $db->query('SELECT id, name, price, image, author FROM product '
+            . 'WHERE status = "1"'
+            . 'ORDER BY id DESC '
+            . 'LIMIT ' . $num . ',3');
+
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $productsListAjax[$i]['id'] = $row['id'];
+            $productsListAjax[$i]['name'] = $row['name'];
+            $productsListAjax[$i]['image'] = $row['image'];
+            $productsListAjax[$i]['price'] = $row['price'];
+            $productsListAjax[$i]['author'] = $row['author'];
+            $i++;
+        }
+
+        return $productsListAjax;
     }
     
 
@@ -44,7 +89,7 @@ class Catalog
 
             $db = Db::getConnection();            
             $products = array();
-            $result = $db->query("SELECT id, name, price, image, is_new FROM product "
+            $result = $db->query("SELECT id, name, price, image, author FROM product "
                     . "WHERE status = '1' AND category_id = '$categoryId' "
                     . "ORDER BY id DESC "                
                     . "LIMIT ".self::SHOW_BY_DEFAULT);
@@ -55,7 +100,7 @@ class Catalog
                 $products[$i]['name'] = $row['name'];
                 $products[$i]['image'] = $row['image'];
                 $products[$i]['price'] = $row['price'];
-                $products[$i]['is_new'] = $row['is_new'];
+                $products[$i]['author'] = $row['author'];
                 $i++;
             }
 
@@ -78,6 +123,74 @@ class Catalog
         }
     }
 
+    public static function lastViewedProduct($id)
+    {
+        $id = intval($id);
+
+        if(isset($_SESSION['lastViewedProduct'])) {
+            array_unshift($_SESSION['lastViewedProduct'], $id);
+            $_SESSION['lastViewedProduct'] = array_unique($_SESSION['lastViewedProduct']);
+        }
+        if (count($_SESSION['lastViewedProduct']) > 5) {
+            array_pop($_SESSION['lastViewedProduct']);
+        }
+    }
+
+    public static function getProductsByIds($idsArray)
+    {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Превращаем массив в строку для формирования условия в запросе
+        $idsString = implode(',', $idsArray);
+
+        // Текст запроса к БД
+        $sql = "SELECT * FROM product WHERE status='1' AND id IN ($idsString)";
+
+        $result = $db->query($sql);
+
+        // Указываем, что хотим получить данные в виде массива
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        // Получение и возврат результатов
+        $i = 0;
+        $products = array();
+        while ($row = $result->fetch()) {
+            $products[$i]['id'] = $row['id'];
+            $products[$i]['name'] = $row['name'];
+            $products[$i]['price'] = $row['price'];
+            $i++;
+        }
+        return $products;
+    }
+
+    public static function getLastViewedProductsByIds($idsArray)
+    {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Превращаем массив в строку для формирования условия в запросе
+        $idsString = implode(',', $idsArray);
+
+        // Текст запроса к БД
+        $sql = "SELECT * FROM product WHERE id IN ($idsString) ORDER BY FIELD(id, $idsString)";
+
+        $result = $db->query($sql);
+
+        // Указываем, что хотим получить данные в виде массива
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        // Получение и возврат результатов
+        $i = 0;
+        $products = array();
+        while ($row = $result->fetch()) {
+            $products[$i]['id'] = $row['id'];
+            $products[$i]['name'] = $row['name'];
+            $products[$i]['price'] = $row['price'];
+            $i++;
+        }
+        return $products;
+    }
 
     public static function getCategoriesList()
     {
