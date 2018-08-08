@@ -1,0 +1,75 @@
+{% extends "admin/base/admin.base.tmpl" %}
+     {% block content %}
+
+
+         <div class="d-flex bd-highlight mb-3" style="margin-top: 20px">
+             <div class="mr-auto p-2 bd-highlight"><h1 class="h2">Просмотр заказа</h1></div>
+         </div>
+
+
+
+         <table class="table table-bordered" style="max-width: 700px">
+
+             <tbody>
+             <tr>
+                 <th scope="row">ID Заказа:</th>
+                 <td>{{ order.id }}</td>
+             </tr>
+             <tr>
+                 <th scope="row">Дата заказа:</th>
+                 <td>{{ order.date }}</td>
+             </tr>
+             <tr>
+                 <th scope="row">Имя заказчика:</th>
+                 <td>{{ order.user_name }}</td>
+             </tr>
+             <tr>
+                 <th scope="row">Емайл заказчика:</th>
+                 <td>{{ order.user_email }}</td>
+             </tr>
+             <tr>
+                 <th scope="row">Адрес доставки:</th>
+                 <td>{{ order.user_address }}</td>
+             </tr>
+             <tr>
+                 <th scope="row">Комментарий:</th>
+                 <td>{{ order.user_comment }}</td>
+             </tr>
+             </tbody>
+         </table>
+
+
+
+         <h4 class="mt-5" style="text-align: left; margin-bottom: 30px">Товары в заказе:</h4>
+         <table class="table table-hover">
+             <thead class="thead-dark">
+             <tr>
+                 <th scope="col" style="text-align: center; max-width: 400px">Название</th>
+                 <th scope="col" style="text-align: center">Количество</th>
+                 <th scope="col" style="text-align: center">Цена</th>
+                 <th scope="col" style="text-align: center">Сумма</th>
+             </tr>
+             </thead>
+             <tbody>
+
+             {% for products in products %}
+                 <tr>
+                     <td align="center" style="max-width: 300px">{{ products.name }}</td>
+                     <td align="center">{{ productsInCart[products.id]}}</td>
+                     <td align="center">{{ products.price }}</td>
+                     <td align="center">{{ productsInCart[products.id]*products.price }}</td>
+
+                 </tr>
+             {% endfor %}
+
+             <tr>
+                 <td colspan="3" align="right"><strong>Общая стоимость:</strong></td>
+                 <td align="center"><strong>{{ order.total_price }}</strong></td>
+                 <td></td>
+             </tr>
+             </tbody>
+         </table>
+
+
+
+     {% endblock %}

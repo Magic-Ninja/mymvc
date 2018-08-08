@@ -1,0 +1,36 @@
+{% extends "admin/base/admin.base.tmpl" %}
+     {% block content %}
+
+
+         <div class="d-flex bd-highlight mb-3" style="margin-top: 20px">
+             <div class="mr-auto p-2 bd-highlight"><h1 class="h2">Пользователи</h1></div>
+             <div class="p-2 bd-highlight"></div>
+
+         </div>
+         <hr>
+
+         <table class="table table-hover" style="max-width: 800px">
+             <thead class="thead-dark">
+             <tr>
+                 <th scope="col" style="text-align: right">ID</th>
+                 <th scope="col" style="text-align: left">Имя</th>
+                 <th scope="col" style="text-align: center">Емайл</th>
+                 <th scope="col" style="text-align: center">Статус</th>
+             </tr>
+             </thead>
+             <tbody>
+
+             {% for users in users %}
+                 <tr>
+                     <td align="right">{{ users.id }}</td>
+                     <td align="left">{{ users.name}}</td>
+                     <td align="center">{{ users.email}}</td>
+                     <td align="center">{{ users.role }}</td>
+                 </tr>
+             {% endfor %}
+
+
+             </tbody>
+         </table>
+
+     {% endblock %}

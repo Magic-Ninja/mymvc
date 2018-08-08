@@ -1,0 +1,23 @@
+{% extends "admin/base/admin.base.tmpl" %}
+     {% block content %}
+
+
+         <div class="d-flex bd-highlight mb-3" style="margin-top: 20px">
+             <div class="mr-auto p-2 bd-highlight"><h1 class="h2">Удалить товар</h1></div>
+         </div>
+         <hr>
+
+         <h5>Уверены, что хотите удалить товар?<br> {{ product.name }}, ID: {{ product.id }} </h5><br>
+
+         <form action="" method="post">
+
+             <div class="form-group row">
+                 <div class="col-sm-2"><button type="submit" name="submit" class="btn btn-success">Да, хочу удалить!</button></div>
+
+
+                 </div>
+             </div>
+         </form>
+
+
+     {% endblock %}

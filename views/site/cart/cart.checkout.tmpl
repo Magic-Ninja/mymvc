@@ -1,0 +1,71 @@
+{% extends "site/base/site.base.tmpl" %}
+     {% block content %}
+
+            <h2 class="mt-5" style="text-align: left; margin-bottom: 30px">Оформление заказа</h2>
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" style="text-align: center; max-width: 400px">Название</th>
+                        <th scope="col" style="text-align: center">Количество</th>
+                        <th scope="col" style="text-align: center">Цена</th>
+                        <th scope="col" style="text-align: center">Сумма</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for products in products %}
+                    <tr>
+                        <td align="center" style="max-width: 300px">{{ products.name }}</td>
+                        <td align="center">{{ productsInCart[products.id]}}</td>
+                        <td align="center">{{ products.price }}</td>
+                        <td align="center">{{ productsInCart[products.id]*products.price }}</td>
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td colspan="3" align="right"><strong>Общая стоимость:</strong></td>
+                        <td align="center"><strong>{{ totalPrice }}</strong></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+         <form action="" method="post">
+             <div class="form-group row">
+                 <label for="name" class="col-sm-2 col-form-label">Ваше имя</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" name="name" id="name" value="{{ user.name }}" required>
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <label for="email" class="col-sm-2 col-form-label">Е-майл</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" name="email" id="email" value="{{ user.email }}" required>
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <label for="address" class="col-sm-2 col-form-label">Адрес доставки</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" name="address" id="address" placeholder="Введите адрес доставки" required>
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <label for="comment" class="col-sm-2 col-form-label">Комментарий</label>
+                 <div class="col-sm-4">
+                     <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
+                 </div>
+             </div>
+
+             <div class="form-group row">
+
+                 <div class="col-sm-6" style="text-align: right"><button type="submit" name="submit" class="btn btn-success">Сделать заказ!</button></div>
+
+
+                 </div>
+             </div>
+         </form>
+<br>
+
+     {% endblock %}

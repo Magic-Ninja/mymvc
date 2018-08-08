@@ -1,0 +1,50 @@
+{% extends "admin/base/admin.base.tmpl" %}
+     {% block content %}
+
+
+         <div class="d-flex bd-highlight mb-3" style="margin-top: 20px">
+             <div class="mr-auto p-2 bd-highlight"><h1 class="h2">Редактировать категорию</h1></div>
+         </div>
+         <hr>
+
+         <form action="" method="post">
+             <div class="form-group row">
+                 <label for="name" class="col-sm-2 col-form-label">ID</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" name="id" value="{{ category.id }}" readonly>
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <label for="name" class="col-sm-2 col-form-label">Название</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" name="name" value="{{ category.name }}">
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <label for="sort_order" class="col-sm-2 col-form-label">Порядковый номер</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" name="sort_order" value="{{ category.sort_order }}">
+                 </div>
+             </div>
+ <br>
+
+             <div class="form-group row">
+                 <div class="col-sm-2"></div>
+                 <div class="col-sm-2">
+                     <div class="form-check">
+                         <input class="form-check-input" type="checkbox" name="status" {% if category.status == 1 %} checked {% endif %}>
+                         <label class="form-check-label" for="status">Показывать в каталоге</label>
+                     </div>
+                 </div>
+             </div>
+             <br>
+             <div class="form-group row">
+                 <div class="col-sm-2"><button type="submit" name="submit" class="btn btn-success">Обновить категорию</button></div>
+                 <div class="col-sm-2">
+
+                 </div>
+             </div>
+         </form>
+
+
+     {% endblock %}

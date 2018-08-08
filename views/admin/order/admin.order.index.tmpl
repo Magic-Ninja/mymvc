@@ -1,0 +1,57 @@
+{% extends "admin/base/admin.base.tmpl" %}
+     {% block content %}
+
+
+         <div class="d-flex bd-highlight mb-3" style="margin-top: 20px">
+             <div class="mr-auto p-2 bd-highlight"><h1 class="h2">Заказы</h1></div>
+
+         </div>
+         <hr>
+
+         <table class="table table-hover">
+             <thead class="thead-dark">
+             <tr>
+                 <th scope="col" style="text-align: right; max-width: 400px">ID</th>
+                 <th scope="col" style="text-align: left">Имя</th>
+                 <th scope="col" style="text-align: center">Емайл</th>
+                 <th scope="col" style="text-align: center">Адрес</th>
+                 <th scope="col" style="text-align: center">Дата</th>
+                 <th scope="col" style="text-align: center">Стоимость</th>
+                 <th scope="col" style="text-align: center">Статус</th>
+                 <th scope="col" style="text-align: center">Изменить статус</th>
+                 <th scope="col" style="text-align: center">Просмотреть</th>
+                 <th scope="col" style="text-align: center">Удалить</th>
+             </tr>
+             </thead>
+             <tbody>
+
+             {% for ordersList in ordersList %}
+                 <tr>
+                     <td align="right">{{ ordersList.id }}</td>
+                     <td align="left">{{ ordersList.user_name}}</td>
+                     <td align="center">{{ ordersList.user_email}}</td>
+                     <td align="center">{{ ordersList.user_address }}</td>
+                     <td align="center">{{ ordersList.date }}</td>
+                     <td align="center">{{ ordersList.total_price}}</td>
+                     <td align="center">{{ ordersList.status }}</td>
+                     <td align="center">
+                         <form class="form-inline" method="post" action="order/updateStatus">
+                                 <select name="orderStatus" class="form-control form-control-sm">
+                                     {% for statusList in statusList %}
+                                     <option  value="{{ statusList.status_id }}" {% if ordersList.status == statusList.status_text %} selected {% endif %}>{{ statusList.status_text }}</option>
+                                     {% endfor %}
+                                 </select>
+                             <input type="hidden" name="orderId" value="{{ ordersList.id }}">
+                             <button type="submit" name="updateStatus" class="btn btn-success btn-sm">OK</button>
+                         </form>
+                     </td>
+                     <td align="center"><a href="/admin/order/view/{{ ordersList.id }}">Просмотреть</a> </td>
+                     <td align="center"><a href="/admin/order/delete/{{ ordersList.id }}">Удалить</a> </td>
+                 </tr>
+             {% endfor %}
+
+
+             </tbody>
+         </table>
+
+     {% endblock %}

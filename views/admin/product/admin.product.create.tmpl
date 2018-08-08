@@ -1,0 +1,97 @@
+{% extends "admin/base/admin.base.tmpl" %}
+     {% block content %}
+
+
+         <div class="d-flex bd-highlight mb-3" style="margin-top: 20px">
+             <div class="mr-auto p-2 bd-highlight"><h1 class="h2">Добавить товар</h1></div>
+         </div>
+         <hr>
+
+         <form action="" method="post">
+             <div class="form-group row">
+                 <label for="name" class="col-sm-2 col-form-label">Название</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" name="name" value="">
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <label for="author" class="col-sm-2 col-form-label">Автор</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" name="author" value="">
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <label for="description" class="col-sm-2 col-form-label">Описание</label>
+                 <div class="col-sm-4">
+                     <textarea class="form-control" name="description" rows="4"></textarea>
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <label for="price" class="col-sm-2 col-form-label">Цена</label>
+                 <div class="col-sm-2">
+                     <input type="number" class="form-control" step="0.01" name="price" value="">
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <label for="category" class="col-sm-2 col-form-label">Категория</label>
+                 <div class="col-sm-2">
+                     <select class="form-control" name="category_id">
+                         {% for category in category %}
+                         <option value="{{ category.id }}">{{ category.name }}</option>
+                         {% endfor %}
+                     </select>
+                 </div>
+             </div><br>
+             <div class="form-group row">
+                 <label for="image" class="col-sm-2 col-form-label">Изображение</label>
+                 <div class="col-sm-3">
+                     <input type="file" class="form-control-file" name="image">
+                 </div>
+             </div><br>
+             <div class="form-group row">
+                 <div class="col-sm-2">Состояние</div>
+                 <div class="col-sm-2">
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="is_new">
+                         <label class="form-check-label" for="is_new">Новый</label>
+                     </div>
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <div class="col-sm-2"></div>
+                 <div class="col-sm-2">
+                     <div class="form-check">
+                         <input class="form-check-input" type="checkbox" name="is_recommended">
+                         <label class="form-check-label" for="is_recommended">Рекомендуемый</label>
+                     </div>
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <div class="col-sm-2"></div>
+                 <div class="col-sm-2">
+                     <div class="form-check">
+                         <input class="form-check-input" type="checkbox" name="availability">
+                         <label class="form-check-label" for="is_available">На складе</label>
+                     </div>
+                 </div>
+             </div>
+             <div class="form-group row">
+                 <div class="col-sm-2"></div>
+                 <div class="col-sm-2">
+                     <div class="form-check">
+                         <input class="form-check-input" type="checkbox" name="status">
+                         <label class="form-check-label" for="status">Показывать в каталоге</label>
+                     </div>
+                 </div>
+             </div>
+             <br>
+             <div class="form-group row">
+                 <div class="col-sm-2"><button type="submit" name="submit" class="btn btn-success">Создать товар</button></div>
+                 <div class="col-sm-2">
+
+                 </div>
+             </div>
+         </form>
+
+
+     {% endblock %}
