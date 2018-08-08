@@ -5,15 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/models" isTestSource="false" packagePrefix="models\" />
       <sourceFolder url="file://$MODULE_DIR$/controllers" isTestSource="false" packagePrefix="controllers\" />
       <sourceFolder url="file://$MODULE_DIR$/components" isTestSource="false" packagePrefix="components\" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-ctype" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/twig/twig" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="shop.php-start.com-master" />
-    <orderEntry type="module" module-name="stanislava" />
-    <orderEntry type="module" module-name="practice6_ajax_example" />
   </component>
 </module>

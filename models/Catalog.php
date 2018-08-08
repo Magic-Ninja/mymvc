@@ -130,6 +130,8 @@ class Catalog
         if(isset($_SESSION['lastViewedProduct'])) {
             array_unshift($_SESSION['lastViewedProduct'], $id);
             $_SESSION['lastViewedProduct'] = array_unique($_SESSION['lastViewedProduct']);
+        } else {
+            return 0;
         }
         if (count($_SESSION['lastViewedProduct']) > 5) {
             array_pop($_SESSION['lastViewedProduct']);
@@ -211,18 +213,178 @@ class Catalog
 
         return $categoryList;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public static function getCategoryById($id)
+    {
+
+        $db = Db::getConnection();
+
+        $sql = 'SELECT * FROM category WHERE id = :id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        $result->execute();
+
+        return $result->fetch();
+    }
+
+    public static function getCategoriesListAdmin()
+    {
+        $db = Db::getConnection();
+
+        $result = $db->query('SELECT id, name, sort_order, status FROM category ORDER BY sort_order ASC');
+
+        $categoryList = array();
+
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $categoryList[$i]['id'] = $row['id'];
+            $categoryList[$i]['name'] = $row['name'];
+            $categoryList[$i]['sort_order'] = $row['sort_order'];
+            $categoryList[$i]['status'] = $row['status'];
+            $i++;
+        }
+        return $categoryList;
+
+    }
+
+
+     // Модели для администрирования товаров и категорий
+
+
+    public static function updateProductById($id, $options)
+    {
+        $db = Db::getConnection();
+
+        $sql = "UPDATE product
+            SET 
+                name = :name, 
+                description = :description,
+                author = :author,
+                price = :price, 
+                category_id = :category_id, 
+                image = :image,
+                image_thumb = :image_thumb,
+                availability = :availability, 
+                is_new = :is_new, 
+                is_recommended = :is_recommended, 
+                status = :status
+            WHERE id = :id";
+
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':name', $options['name'], PDO::PARAM_STR);
+        $result->bindParam(':author', $options['author'], PDO::PARAM_STR);
+        $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
+        $result->bindParam(':price', $options['price'], PDO::PARAM_STR);
+        $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
+        $result->bindParam(':image', $options['image'], PDO::PARAM_STR);
+        $result->bindParam(':image_thumb', $options['image_thumb'], PDO::PARAM_STR);
+        $result->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
+        $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
+        $result->bindParam(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
+        $result->bindParam(':status', $options['status'], PDO::PARAM_INT);
+        return $result->execute();
+    }
+
+
+    public static function createProduct($options)
+    {
+        $db = Db::getConnection();
+
+
+        $sql = "INSERT INTO product (name, author, description, price, category_id, image, image_thumb, availability, is_new, is_recommended, status) VALUES  (:name, :author, :description, :price, :category_id, :image, :image_thumb, :availability, :is_new, :is_recommended, :status)";
+
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':name', $options['name'], PDO::PARAM_STR);
+        $result->bindParam(':author', $options['author'], PDO::PARAM_STR);
+        $result->bindParam(':description', $options['description'], PDO::PARAM_STR);
+        $result->bindParam(':price', $options['price'], PDO::PARAM_STR);
+        $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
+        $result->bindParam(':image', $options['image'], PDO::PARAM_STR);
+        $result->bindParam(':image_thumb', $options['image_thumb'], PDO::PARAM_STR);
+        $result->bindParam(':availability', $options['availability'], PDO::PARAM_INT);
+        $result->bindParam(':is_new', $options['is_new'], PDO::PARAM_INT);
+        $result->bindParam(':is_recommended', $options['is_recommended'], PDO::PARAM_INT);
+        $result->bindParam(':status', $options['status'], PDO::PARAM_INT);
+        if ($result->execute()) {
+            return $db->lastInsertId();
+        }
+        return 0;
+    }
+
+    public static function deleteProductById($id)
+    {
+        $db = Db::getConnection();
+
+        $sql = 'DELETE FROM product WHERE id = :id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        return $result->execute();
+    }
+
+
+    public static function createCategory($name, $sortOrder, $status)
+    {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Текст запроса к БД
+        $sql = 'INSERT INTO category (name, sort_order, status) '
+            . 'VALUES (:name, :sort_order, :status)';
+
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare($sql);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':sort_order', $sortOrder, PDO::PARAM_INT);
+        $result->bindParam(':status', $status, PDO::PARAM_INT);
+        if ($result->execute()) {
+            return $db->lastInsertId();
+        }
+        return 0;
+    }
+
+    public static function updateCategoryById($id, $name, $sortOrder, $status)
+    {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Текст запроса к БД
+        $sql = "UPDATE category
+            SET 
+                name = :name, 
+                sort_order = :sort_order, 
+                status = :status
+            WHERE id = :id";
+
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':sort_order', $sortOrder, PDO::PARAM_INT);
+        $result->bindParam(':status', $status, PDO::PARAM_INT);
+        return $result->execute();
+    }
+
+    public static function deleteCategoryById($id)
+    {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Текст запроса к БД
+        $sql = 'DELETE FROM category WHERE id = :id';
+
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        return $result->execute();
+    }
     
 
 

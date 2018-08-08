@@ -77,6 +77,14 @@ class User
         header("Location: /user/login");
     }
 
+    public static  function checkLoggedCart()
+    {
+        if (isset($_SESSION['user'])) {
+            return $_SESSION['user'];
+        }
+
+    }
+
     public static  function checkAdminLogged()
     {
         if (isset($_SESSION['user'])) {
@@ -86,7 +94,7 @@ class User
         header("Location: /admin/login");
     }
 
-    // Получаем данные пользователя по id
+
     public static function getUserById($id)
     {
         $db = Db::getConnection();
@@ -98,6 +106,24 @@ class User
         $result->execute();
 
         return $result->fetch();
+    }
+
+
+
+    public static function getUsersList()
+    {
+        $db = Db::getConnection();
+        $result = $db->query('SELECT id, name, email, role FROM user ORDER BY id DESC');
+        $userList = array();
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $userList[$i]['id'] = $row['id'];
+            $userList[$i]['name'] = $row['name'];
+            $userList[$i]['email'] = $row['email'];
+            $userList[$i]['role'] = $row['role'];
+            $i++;
+        }
+        return $userList;
     }
 
 

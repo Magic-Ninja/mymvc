@@ -9,6 +9,7 @@
 namespace controllers;
 use models\User;
 use models\Catalog;
+use models\Order;
 use components\View;
 
 
@@ -23,13 +24,22 @@ class CabinetController
         } else {
             $lastViewedProduct['lastViewedProduct'] = 0;
         }
+
+        $userOrdersList['userOrdersList'] = Order::getUserOrdersList($userId);
+        $userOrdersCount = array_keys($userOrdersList['userOrdersList']);
+        $userOrdersCount = count($userOrdersCount);
+
+        for ($i = 0; $i < $userOrdersCount; $i++)
+        {
+            $statusId = $userOrdersList['userOrdersList'][$i]['status'];
+            $status[$i] = Order::getStatusText($statusId);
+            $userOrdersList['userOrdersList'][$i]['status'] = $status[$i]['status_text'];
+        }
         //echo "<pre>";
-        //print_r($_SESSION['lastViewedProduct']);
-        //print_r($lastViewedProduct);
-        //print_r($idsString);
+        //print_r($userOrdersCount);
         //echo "</pre>";
         $view = new View();
-        $view->render('/site/cabinet/cabinet.index.tmpl', $user+$lastViewedProduct);
+        $view->render('/site/cabinet/cabinet.index.tmpl', $user+$lastViewedProduct+$userOrdersList);
         return true;
     }
 

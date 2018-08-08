@@ -31,9 +31,11 @@
                     </tr>
                     </tbody>
                 </table>
-
-             <div style="text-align: center; margin-top: 40px"><a class="btn btn-success" href="/cart/checkout"><h5>Оформить заказ!</h5></a></div>
-
+                        {% if userId %}
+                                     <div style="text-align: center; margin-top: 40px"><a class="btn btn-success" href="/cart/checkout"><h5>Оформить заказ!</h5></a></div>
+                        {% else %}
+                            <div style="text-align: center; margin-top: 40px"><a class="btn btn-success" href="/user/login"><h5>Зарегистрируйтесь для заказа!</h5></a></div>
+                        {% endif %}
 
          {% else %}
              <h2 class="mt-5" style="text-align: left; margin-bottom: 30px">Ваша корзина пуста!</h2>
